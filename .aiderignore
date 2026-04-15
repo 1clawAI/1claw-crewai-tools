@@ -1,0 +1,25 @@
+# Aider — ignore patterns (mirrors other AI tool ignores in this repo).
+
+.venv/
+venv/
+env/
+**/site-packages/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+.eggs/
+*.egg
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+credentials.json
+**/client_secret*.json
+.DS_Store

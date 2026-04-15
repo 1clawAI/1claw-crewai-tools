@@ -1,0 +1,32 @@
+# Cursor — limit indexing / @-mentions to source and docs (not env or build noise).
+
+# Virtual envs & packaging noise
+.venv/
+venv/
+env/
+**/site-packages/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+.eggs/
+*.egg
+
+# Secrets & local credentials (never index)
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+.p12
+.pfx
+credentials.json
+**/client_secret*.json
+
+# OS / editor
+.DS_Store
