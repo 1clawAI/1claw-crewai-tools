@@ -30,9 +30,9 @@ class OneclawVaultInput(BaseModel):
 class OneclawVaultTool(BaseTool):
     """Tool that fetches a secret value from a 1Claw vault by path."""
 
-    name: str = "1claw Vault"
+    name: str = "oneclaw_vault"
     description: str = (
-        "Fetch a secret from a 1claw HSM-backed vault by its path. "
+        "Fetch a secret from the 1Claw HSM-backed vault by its path. "
         "Use this tool whenever you need an API key, token, connection string, "
         "or other credential. Never ask the user to paste credentials — "
         "fetch them from the vault instead. "
