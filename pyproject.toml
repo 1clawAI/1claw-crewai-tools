@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "1claw-crewai-tools"
+version = "0.1.0"
+description = "Secure secret fetching for CrewAI agents via 1claw HSM-backed vaults"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10,<3.14"
+authors = [{ name = "1Claw" }]
+keywords = ["1claw", "crewai", "secrets", "vault", "agents"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
+]
+dependencies = [
+  "crewai>=0.100.0",
+  "httpx>=0.27",
+  "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "respx>=0.21",
+  "ruff>=0.4",
+  "mypy>=1.8",
+  "freezegun>=1.5",
+  "build>=1.0",
+  "twine>=5.0",
+]
+
+[project.urls]
+Documentation = "https://docs.1claw.xyz"
+Homepage = "https://github.com/1ClawAI/1claw-crewai-tools"
+Repository = "https://github.com/1ClawAI/1claw-crewai-tools"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+oneclaw_crewai = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests", "examples"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "W"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+mypy_path = "src"
+packages = ["oneclaw_crewai"]
+
+[[tool.mypy.overrides]]
+module = ["crewai.*", "crewai_tools.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
