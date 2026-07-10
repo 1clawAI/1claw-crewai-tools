@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "1claw-crewai-tools"
-version = "0.1.0"
+version = "0.1.1"
 description = "Secure secret fetching for CrewAI agents via 1claw HSM-backed vaults"
 readme = "README.md"
 license = "MIT"
