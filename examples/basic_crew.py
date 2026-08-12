@@ -1,7 +1,7 @@
 # Run: pip install -e . && python examples/basic_crew.py
-# Requires: ONECLAW_* env vars and an LLM key (OPENAI_API_KEY or GOOGLE_API_KEY).
+# Requires: ONECLAW_AGENT_API_KEY env var and an LLM key (OPENAI_API_KEY or GOOGLE_API_KEY).
 
-"""Example two-agent crew: first agent fetches a vault path; second summarizes static text."""
+"""Example multi-agent crew using all 1Claw tools: secrets, memory, signing, automations."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ import sys
 
 from crewai import Agent, Crew, Process, Task
 
-from oneclaw_crewai import OneclawVaultTool
+from oneclaw_crewai import OneclawClient, get_all_tools
 
 
 def _require_env(name: str) -> str:
@@ -39,58 +39,61 @@ def _get_llm() -> object | None:
 
 def main() -> None:
     llm = _get_llm()
-
-    agent_id = _require_env("ONECLAW_AGENT_ID")
     api_key = _require_env("ONECLAW_AGENT_API_KEY")
-    vault_id = _require_env("ONECLAW_VAULT_ID")
 
-    vault_tool = OneclawVaultTool(
-        agent_id=agent_id,
-        api_key=api_key,
-        vault_id=vault_id,
-    )
+    client = OneclawClient(api_key=api_key)
+    tools = get_all_tools(client)
 
     llm_kwargs: dict[str, object] = {"llm": llm} if llm else {}
 
-    fetcher = Agent(
-        role="Credential coordinator",
-        goal="Retrieve the configured key path from 1Claw without exposing it in chat logs.",
-        backstory="You only use the vault tool and report success or failure in generic terms.",
-        tools=[vault_tool],
+    secrets_agent = Agent(
+        role="Secrets Manager",
+        goal="Fetch and manage vault secrets securely.",
+        backstory="You retrieve and rotate credentials. Never expose raw values.",
+        tools=tools,
         verbose=True,
         **llm_kwargs,
     )
 
-    summarizer = Agent(
-        role="Technical writer",
-        goal="Produce a one-sentence explanation of HTTPS for developers.",
-        backstory="You never handle raw API keys; you only summarize public facts.",
-        tools=[],
+    memory_agent = Agent(
+        role="Knowledge Manager",
+        goal="Store and recall important information across sessions.",
+        backstory="You use encrypted memory for persistent knowledge.",
+        tools=tools,
         verbose=True,
         **llm_kwargs,
     )
 
     task_fetch = Task(
         description=(
-            "Use the 'oneclaw_vault' tool with path 'api-keys/openai'. "
-            "Respond with a single line stating only whether the lookup succeeded — "
-            "do not include any characters from the credential itself."
+            "Use 'oneclaw_vault' to read 'api-keys/openai'. "
+            "Report only whether the lookup succeeded and the character length."
         ),
         expected_output="One line: success or failure, no key material.",
-        agent=fetcher,
+        agent=secrets_agent,
     )
 
-    task_summary = Task(
+    task_remember = Task(
         description=(
-            "Write one sentence explaining that HTTPS encrypts data between browser and server."
+            "Use 'oneclaw_memory_put' to store the key 'last-check' with value "
+            "'secrets verified' in the 'default' namespace."
         ),
-        expected_output="One sentence.",
-        agent=summarizer,
+        expected_output="Confirmation that the value was stored.",
+        agent=memory_agent,
+    )
+
+    task_recall = Task(
+        description=(
+            "Use 'oneclaw_memory_get' to retrieve 'last-check' "
+            "from the 'default' namespace."
+        ),
+        expected_output="The retrieved value.",
+        agent=memory_agent,
     )
 
     crew = Crew(
-        agents=[fetcher, summarizer],
-        tasks=[task_fetch, task_summary],
+        agents=[secrets_agent, memory_agent],
+        tasks=[task_fetch, task_remember, task_recall],
         process=Process.sequential,
         verbose=True,
     )

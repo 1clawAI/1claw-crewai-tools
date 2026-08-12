@@ -4,14 +4,24 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "1claw-crewai-tools"
-version = "0.1.1"
-description = "Secure secret fetching for CrewAI agents via 1claw HSM-backed vaults"
+version = "0.2.0"
+description = "CrewAI tools for 1Claw — HSM-backed secrets, signing, memory, and automations for AI agents"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
-requires-python = ">=3.10,<3.14"
-authors = [{ name = "1Claw" }]
-keywords = ["1claw", "crewai", "secrets", "vault", "agents"]
+requires-python = ">=3.10"
+authors = [{ name = "1Claw", email = "ops@1claw.xyz" }]
+keywords = [
+  "1claw",
+  "crewai",
+  "secrets",
+  "vault",
+  "agents",
+  "signing",
+  "memory",
+  "hsm",
+  "blockchain",
+]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
@@ -20,6 +30,8 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Topic :: Security",
+  "Topic :: Software Development :: Libraries",
   "Typing :: Typed",
 ]
 dependencies = [
@@ -31,6 +43,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "pytest>=8.0",
+  "pytest-asyncio>=0.23",
   "respx>=0.21",
   "ruff>=0.4",
   "mypy>=1.8",
@@ -40,9 +53,10 @@ dev = [
 ]
 
 [project.urls]
-Documentation = "https://docs.1claw.xyz"
+Documentation = "https://docs.1claw.xyz/docs/integrations/crewai"
 Homepage = "https://github.com/1ClawAI/1claw-crewai-tools"
 Repository = "https://github.com/1ClawAI/1claw-crewai-tools"
+Changelog = "https://github.com/1ClawAI/1claw-crewai-tools/releases"
 
 [tool.setuptools.packages.find]
 where = ["src"]
