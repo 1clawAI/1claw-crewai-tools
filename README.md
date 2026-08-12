@@ -5,9 +5,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![CI](https://github.com/1ClawAI/1claw-crewai-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/1ClawAI/1claw-crewai-tools/actions/workflows/ci.yml)
 
-**CrewAI tools for [1Claw](https://1claw.xyz) — HSM-backed secrets, multi-chain signing, encrypted memory, and automation workflows for AI agents.**
+CrewAI agents need credentials and signing keys, but crew configs are not a safe place to store them. Hard-coded API keys end up in git. Shared `.env` files break when you spin up parallel agents with different permissions.
 
-11 tools that give CrewAI agents secure access to vault secrets, blockchain signing keys, persistent memory, and workflow automations — all guarded by policy-based access control. Private keys never leave the HSM.
+`1claw-crewai-tools` wraps the [1Claw](https://1claw.xyz) API as CrewAI-compatible tools. Each tool fetches secrets at runtime, signs transactions server-side, and writes to encrypted agent memory. Access is policy-scoped: your agent only sees vault paths a human explicitly granted.
+
+Drop in `get_all_tools(client)` and your crew gets 11 tools (vault, memory, signing, automations) with one `OneclawClient` initialized from `ONECLAW_AGENT_API_KEY`.
 
 ## Install
 
