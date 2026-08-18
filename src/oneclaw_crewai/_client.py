@@ -297,6 +297,38 @@ class OneclawClient:
             params=params or None,
         )
 
+    # --- env vars ---
+
+    def list_env_vars(
+        self,
+        *,
+        vault_id: str | None = None,
+        environment: str | None = None,
+    ) -> list[dict[str, Any]]:
+        """List environment variables for a vault."""
+        vid = vault_id or self.vault_id
+        params: dict[str, Any] = {}
+        if environment:
+            params["environment"] = environment
+        data = self._request("GET", f"/v1/vaults/{vid}/env-vars", params=params or None)
+        return data.get("env_vars", [])  # type: ignore[no-any-return]
+
+    def resolve_env_vars(
+        self,
+        *,
+        vault_id: str | None = None,
+        environment: str | None = None,
+        git_branch: str | None = None,
+    ) -> dict[str, Any]:
+        """Resolve environment variables with precedence for a vault."""
+        vid = vault_id or self.vault_id
+        params: dict[str, Any] = {}
+        if environment:
+            params["environment"] = environment
+        if git_branch:
+            params["git_branch"] = git_branch
+        return self._request("GET", f"/v1/vaults/{vid}/env-vars/resolve", params=params or None)
+
     # --- automations ---
 
     def trigger_automation(

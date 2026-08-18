@@ -9,11 +9,13 @@ from ._client import (
 )
 from ._tool import (
     OneclawGetBalanceTool,
+    OneclawListEnvVarsTool,
     OneclawListSecretsTool,
     OneclawMemoryGetTool,
     OneclawMemoryPutTool,
     OneclawMemorySearchTool,
     OneclawPutSecretTool,
+    OneclawResolveEnvTool,
     OneclawRotateSecretTool,
     OneclawSignMessageTool,
     OneclawSubmitTransactionTool,
@@ -22,7 +24,7 @@ from ._tool import (
     get_all_tools,
 )
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __all__ = [
     "OneclawClient",
     "OneclawError",
@@ -33,6 +35,8 @@ __all__ = [
     "OneclawPutSecretTool",
     "OneclawListSecretsTool",
     "OneclawRotateSecretTool",
+    "OneclawResolveEnvTool",
+    "OneclawListEnvVarsTool",
     "OneclawMemoryPutTool",
     "OneclawMemoryGetTool",
     "OneclawMemorySearchTool",
