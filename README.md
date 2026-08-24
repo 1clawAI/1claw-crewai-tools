@@ -164,6 +164,15 @@ client = OneclawClient(
 )
 ```
 
+## Platform v0.56+ (HITL, HFA, Safe, guardrail governance)
+
+Tools call 1Claw API **v0.56+**. Server-side behavior (no Python package API changes):
+
+- **Graduated HITL** — `OneclawSubmitTransactionTool` may receive `202 awaiting_approval` for human review.
+- **Guardrail governance** — Agent execution and widening guardrail edits may require approval; configure via dashboard/CLI.
+- **Safe foundation** — Counterfactual Safe accounts via Vault agent accounts API.
+- **Multichain signing** — EVM, BTC, SOL, XRP, ADA, TRX unchanged; Vault uses `rust-bitcoin`, `solana-sdk` v4, `xrpl-rust` 1.1.0.
+
 ## Testing
 
 ### Unit tests (offline, no credentials needed)
