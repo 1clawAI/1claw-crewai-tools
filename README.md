@@ -9,7 +9,7 @@ CrewAI agents need credentials and signing keys, but crew configs are not a safe
 
 `1claw-crewai-tools` wraps the [1Claw](https://1claw.xyz) API as CrewAI-compatible tools. Each tool fetches secrets at runtime, signs transactions server-side, and writes to encrypted agent memory. Access is policy-scoped: your agent only sees vault paths a human explicitly granted.
 
-Drop in `get_all_tools(client)` and your crew gets 11 tools (vault, memory, signing, automations) with one `OneclawClient` initialized from `ONECLAW_AGENT_API_KEY`.
+Drop in `get_all_tools(client)` and your crew gets 13 tools (vault, env vars, memory, signing, automations) with one `OneclawClient` initialized from `ONECLAW_AGENT_API_KEY`.
 
 ## Install
 
@@ -33,7 +33,7 @@ client = OneclawClient(
     # agent_id and vault_id are auto-resolved from the API key
 )
 
-tools = get_all_tools(client)  # 11 tools
+tools = get_all_tools(client)  # 13 tools
 
 researcher = Agent(
     role="Blockchain Researcher",
@@ -79,6 +79,8 @@ agent = Agent(
 | `OneclawPutSecretTool` | `oneclaw_put_secret` | Store or update a secret |
 | `OneclawListSecretsTool` | `oneclaw_list_secrets` | List secrets (paths, not values) |
 | `OneclawRotateSecretTool` | `oneclaw_rotate_secret` | Server-side secret rotation |
+| `OneclawResolveEnvTool` | `oneclaw_resolve_env` | Resolve vault env vars with precedence |
+| `OneclawListEnvVarsTool` | `oneclaw_list_env_vars` | List env var keys for a vault/environment |
 | `OneclawMemoryPutTool` | `oneclaw_memory_put` | Store a value in encrypted memory |
 | `OneclawMemoryGetTool` | `oneclaw_memory_get` | Retrieve a value from memory |
 | `OneclawMemorySearchTool` | `oneclaw_memory_search` | Semantic search over memory |
@@ -166,7 +168,7 @@ client = OneclawClient(
 
 ## Platform v0.56+ (HITL, HFA, Safe, guardrail governance)
 
-Tools call 1Claw API **v0.56+**. Server-side behavior (no Python package API changes):
+Tools call 1Claw API **v0.58+**. Server-side behavior (no Python package API changes):
 
 - **Graduated HITL** — `OneclawSubmitTransactionTool` may receive `202 awaiting_approval` for human review.
 - **Guardrail governance** — Agent execution and widening guardrail edits may require approval; configure via dashboard/CLI.
