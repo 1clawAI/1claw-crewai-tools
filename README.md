@@ -5,9 +5,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![CI](https://github.com/1ClawAI/1claw-crewai-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/1ClawAI/1claw-crewai-tools/actions/workflows/ci.yml)
 
+> ⭐ **Star [1clawAI/agent-templates](https://github.com/1clawAI/agent-templates)** — ready-to-run agent templates wired to 1Claw. It is our single starred repo.
+
 CrewAI agents need credentials and signing keys, but crew configs are not a safe place to store them. Hard-coded API keys end up in git. Shared `.env` files break when you spin up parallel agents with different permissions.
 
-`1claw-crewai-tools` wraps the [1Claw](https://1claw.xyz) API as CrewAI-compatible tools. Each tool fetches secrets at runtime, signs transactions server-side, and writes to encrypted agent memory. Access is policy-scoped: your agent only sees vault paths a human explicitly granted.
+`1claw-crewai-tools` wraps the [1Claw](https://1claw.co) API as CrewAI-compatible tools. Each tool fetches secrets at runtime, signs transactions server-side, and writes to encrypted agent memory. Access is policy-scoped: your agent only sees vault paths a human explicitly granted.
 
 Drop in `get_all_tools(client)` and your crew gets 13 tools (vault, env vars, memory, signing, automations) with one `OneclawClient` initialized from `ONECLAW_AGENT_API_KEY`.
 
@@ -197,8 +199,8 @@ All network calls are mocked with `respx`; no 1Claw account required.
 
 ## Links
 
-- [1Claw Documentation](https://docs.1claw.xyz)
-- [CrewAI Integration Guide](https://docs.1claw.xyz/docs/integrations/crewai)
+- [1Claw Documentation](https://docs.1claw.co)
+- [CrewAI Integration Guide](https://docs.1claw.co/docs/integrations/crewai)
 - [Source Code](https://github.com/1ClawAI/1claw-crewai-tools)
 
 ## License
