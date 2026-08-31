@@ -332,23 +332,30 @@ def test_trigger_automation_tool() -> None:
 # --- get_all_tools ---
 
 
-def test_get_all_tools_returns_11_tools() -> None:
+def test_get_all_tools_returns_every_registered_tool() -> None:
+    # An exact set, not a count: when a tool is added or renamed the failure
+    # names it. The previous version asserted len() == 11 alongside 11 names,
+    # so the two env-var tools were added without the test noticing.
+    expected = {
+        "oneclaw_vault",
+        "oneclaw_put_secret",
+        "oneclaw_list_secrets",
+        "oneclaw_rotate_secret",
+        "oneclaw_resolve_env",
+        "oneclaw_list_env_vars",
+        "oneclaw_memory_put",
+        "oneclaw_memory_get",
+        "oneclaw_memory_search",
+        "oneclaw_sign_message",
+        "oneclaw_submit_transaction",
+        "oneclaw_get_balance",
+        "oneclaw_trigger_automation",
+    }
     agent_id, vault_id, _ = _ids()
     client = _make_client(agent_id, vault_id)
     try:
         tools = get_all_tools(client)
-        assert len(tools) == 11
-        names = {t.name for t in tools}
-        assert "oneclaw_vault" in names
-        assert "oneclaw_put_secret" in names
-        assert "oneclaw_list_secrets" in names
-        assert "oneclaw_rotate_secret" in names
-        assert "oneclaw_memory_put" in names
-        assert "oneclaw_memory_get" in names
-        assert "oneclaw_memory_search" in names
-        assert "oneclaw_sign_message" in names
-        assert "oneclaw_submit_transaction" in names
-        assert "oneclaw_get_balance" in names
-        assert "oneclaw_trigger_automation" in names
+        assert {t.name for t in tools} == expected
+        assert len(tools) == len(expected), "get_all_tools returned a duplicate"
     finally:
         client.close()

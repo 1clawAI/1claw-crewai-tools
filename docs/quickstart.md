@@ -2,7 +2,7 @@
 
 ## 1. Prerequisites
 
-1. A [1Claw](https://1claw.xyz) account and organization.
+1. A [1Claw](https://1claw.co) account and organization.
 2. A **vault** that will hold your secrets (for example via the dashboard or CLI).
 3. An **agent** registered in that org, with an **access policy** that grants **read** (and optionally write) on the paths your crew will use — for example `api-keys/*` if you store keys under `api-keys/...`.
 4. The agent's **`ocv_` API key** and **agent id**, and the **vault id** (UUIDs from the dashboard or CLI).
@@ -40,7 +40,7 @@ pip install -e ".[dev]"
 
 Optional: point at a self-hosted or staging API (advanced):
 
-- Pass `base_url=` when constructing `OneclawVaultTool` (default `https://api.1claw.xyz`).
+- Pass `base_url=` when constructing `OneclawVaultTool` (default `https://api.1claw.co`).
 
 ## 4. Minimal example (OpenAI)
 
@@ -126,7 +126,7 @@ python examples/test_live.py demo/api-key
 |---------|----------------|
 | `[1claw error]` mentioning **401** / **403** | Agent policy does not allow this vault or path; JWT expired (client refreshes before calls — check clock skew); wrong `ONECLAW_AGENT_ID` / key. |
 | **404** / not found | Path spelling; secret not created yet; wrong `ONECLAW_VAULT_ID`. |
-| Connection errors | Network egress to `https://api.1claw.xyz` (or your `base_url`); TLS interception. |
+| Connection errors | Network egress to `https://api.1claw.co` (or your `base_url`); TLS interception. |
 | `ValueError: function name '1claw_vault'` | Tool name must start with a letter. The default name `oneclaw_vault` avoids this. Don't rename the tool to start with a digit. |
 | `ImportError: Google Gen AI native provider not available` | Install `pip install "crewai[google-genai]"`. |
 
