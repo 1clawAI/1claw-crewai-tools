@@ -42,7 +42,7 @@ class OneclawClient:
         api_key: str,
         agent_id: str | None = None,
         vault_id: str | None = None,
-        base_url: str = "https://api.1claw.xyz",
+        base_url: str = "https://api.1claw.co",
     ) -> None:
         self._api_key = api_key
         self._agent_id = agent_id

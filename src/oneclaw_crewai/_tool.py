@@ -56,7 +56,7 @@ class OneclawVaultTool(BaseTool):
         agent_id: str | None = None,
         api_key: str | None = None,
         vault_id: str | None = None,
-        base_url: str = "https://api.1claw.xyz",
+        base_url: str = "https://api.1claw.co",
         **kwargs: Any,
     ) -> None:
         super().__init__(**kwargs)
