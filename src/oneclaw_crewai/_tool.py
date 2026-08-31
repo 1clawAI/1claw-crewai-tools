@@ -385,7 +385,9 @@ class OneclawGetBalanceTool(BaseTool):
 
 
 class _ResolveEnvInput(BaseModel):
-    environment: str | None = Field(None, description="Environment name (production, preview, development)")
+    environment: str | None = Field(
+        None, description="Environment name (production, preview, development)"
+    )
     git_branch: str | None = Field(None, description="Git branch for branch-specific overrides")
 
 
