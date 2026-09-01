@@ -27,5 +27,19 @@ jobs:
       - name: Build
         run: python -m build
 
+
+      - name: Check the artifacts before uploading
+        run: |
+          pip install twine
+          twine check dist/*
+
+      - name: Refuse to publish a version that is already on PyPI
+        run: |
+          VERSION=$(python -c "import tomllib;print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          if curl -sf "https://pypi.org/pypi/1claw-crewai-tools/$VERSION/json" >/dev/null 2>&1; then
+            echo "1claw-crewai-tools $VERSION is already published. Bump the version in pyproject.toml."
+            exit 1
+          fi
+          echo "1claw-crewai-tools $VERSION is not on PyPI yet."
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
