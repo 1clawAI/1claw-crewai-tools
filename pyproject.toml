@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "1claw-crewai-tools"
-version = "0.3.3"
+version = "0.3.4"
 description = "CrewAI tools for 1Claw — HSM-backed secrets, signing, memory, and automations for AI agents"
 readme = "README.md"
 license = "MIT"
