@@ -10,7 +10,7 @@ import re
 def test_dunder_version_matches_pyproject() -> None:
     """__version__ and pyproject.toml must not drift.
 
-    They did: 1claw-crewai-tools 
+    They did: 1claw-crewai-tools
     shipped a release whose __version__ named an earlier version, because the
     literal in __init__.py was hand-maintained alongside the one in
     pyproject.toml. __version__ now reads the installed distribution metadata,
